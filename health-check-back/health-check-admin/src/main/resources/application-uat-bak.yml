@@ -1,0 +1,49 @@
+spring:
+  aop:
+    proxy-target-class: true
+  datasource:
+    username: user_db_username
+    password: user_db_password
+    jdbcUrl: jdbc:mysql://ip:port/database_name?useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL
+    driverClassName: com.mysql.cj.jdbc.Driver
+    minimumIdle: 2
+    maximumPoolSize: 10
+    idleTimeout: 600000
+    connectionTimeout: 30000
+    leakDetectionThreshold: 0
+  redis:
+    database: 2
+    password: scs@pwd
+    host: 81.69.19.159
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: -1ms
+        min-idle: 0
+    port: 6777
+    timeout: 10s
+
+server:
+  compression:
+    enabled: true
+    min-response-size: 1024
+  port: 8808
+  servlet:
+    context-path: /api/check
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*Mapper.xml,classpath:mapper/*Mapper.xml
+  type-aliases-package: com.health.check.admin
+  typeEnumsPackage: com.health.check.*
+  configuration:
+    map-underscore-to-camel-case: true
+#    mybatis打印SQL日志，查询数据与预期不符合时BUG排查问题
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+health-check:
+  tokenExpirationTime: 1440
+  enableCache: true
+  gateway:
+    annoPattern:
+      - '/auth/login'
